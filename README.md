@@ -1,6 +1,5 @@
 # Intro
 
-个人 Blog
-内容数据存放于 Issues
+Personal Blog content data is stored in Issues
 
-[访问 url](https://github.com/sedationh/blog/issues)
+[Visit url](https://github.com/sedationh/blog/issues)
