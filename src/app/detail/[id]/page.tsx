@@ -6,13 +6,14 @@ import rehypeRaw from 'rehype-raw'
 import { getIssueByNumber, formatDate } from '@/lib/github'
 
 interface DetailPageProps {
-  params: {
+  params: Promise<{
     id: string
-  }
+  }>
 }
 
 export default async function DetailPage({ params }: DetailPageProps) {
-  const issueNumber = parseInt(params.id, 10)
+  const { id } = await params
+  const issueNumber = parseInt(id, 10)
   
   if (isNaN(issueNumber)) {
     notFound()
@@ -168,7 +169,8 @@ export async function generateStaticParams() {
 
 // 为每个页面生成元数据
 export async function generateMetadata({ params }: DetailPageProps) {
-  const issueNumber = parseInt(params.id, 10)
+  const { id } = await params
+  const issueNumber = parseInt(id, 10)
   
   if (isNaN(issueNumber)) {
     return {
