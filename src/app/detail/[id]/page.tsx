@@ -1,9 +1,9 @@
-import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import rehypeRaw from 'rehype-raw'
 import { getIssueByNumber, formatDate } from '@/lib/github'
+import BackButton from './BackButton'
 
 interface DetailPageProps {
   params: Promise<{
@@ -30,12 +30,7 @@ export default async function DetailPage({ params }: DetailPageProps) {
       {/* 导航栏 */}
       <nav className="bg-white shadow-sm">
         <div className="max-w-4xl mx-auto px-4 py-4">
-          <Link 
-            href="/"
-            className="inline-flex items-center text-blue-600 hover:text-blue-800 transition-colors"
-          >
-            ← 返回首页
-          </Link>
+          <BackButton />
         </div>
       </nav>
 
@@ -140,12 +135,11 @@ export default async function DetailPage({ params }: DetailPageProps) {
 
         {/* 返回按钮 */}
         <div className="mt-8 text-center">
-          <Link 
-            href="/"
+          <BackButton 
             className="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
           >
             返回文章列表
-          </Link>
+          </BackButton>
         </div>
       </main>
     </div>
