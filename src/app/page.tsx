@@ -1,96 +1,209 @@
-import Link from 'next/link'
-import { getAllIssues, formatDate } from '@/lib/github'
+import Link from "next/link";
+import Image from "next/image";
+import { getAllIssues, getGitHubUser } from "@/lib/github";
+import ArticleCard from "@/components/ArticleCard";
 
 export default async function Home() {
-  // App Router中可以直接在组件中使用async/await获取数据
-  const issues = await getAllIssues()
+  const [issues, user] = await Promise.all([
+    getAllIssues(),
+    getGitHubUser()
+  ]);
+  const recentIssues = issues.slice(0, 3); // Show the latest 3 articles
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* 头部 */}
-      <header className="bg-white shadow-sm">
-        <div className="max-w-4xl mx-auto px-4 py-6">
-          <h1 className="text-3xl font-bold text-gray-900">我的博客</h1>
-          <p className="text-gray-600 mt-2">基于 GitHub Issues 的简单博客系统</p>
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100">
+      {/* Navigation Bar */}
+      <nav className="bg-white/80 backdrop-blur-md border-b border-gray-200/50 sticky top-0 z-10">
+        <div className="max-w-6xl mx-auto px-4 py-4">
+          <div className="flex items-center justify-between">
+            <div className="text-xl font-bold text-gray-900">My Blog</div>
+            <div className="flex items-center space-x-6">
+              <Link
+                href="/blog"
+                className="text-gray-600 hover:text-gray-900 transition-colors"
+              >
+                Articles
+              </Link>
+              <Link
+                href={user?.html_url || ''}
+                target="_blank"
+                className="text-gray-600 hover:text-gray-900 transition-colors"
+              >
+                GitHub
+              </Link>
+            </div>
+          </div>
         </div>
-      </header>
+      </nav>
 
-      {/* 主要内容 */}
-      <main className="max-w-4xl mx-auto px-4 py-8">
-        {issues.length === 0 ? (
-          <div className="text-center py-12">
-            <p className="text-gray-500 text-lg">暂无文章</p>
-            <p className="text-gray-400 text-sm mt-2">
-              请在 GitHub 仓库中创建 Issues 来发布文章
+      {/* Hero Section */}
+      <section className="max-w-6xl mx-auto px-4 py-16">
+        <div className="flex flex-col md:flex-row items-center md:items-center gap-8 md:gap-12">
+          {/* Avatar */}
+          <div className="flex-shrink-0">
+            {user?.avatar_url ? (
+              <Image
+                src={user.avatar_url}
+                alt="GitHub Avatar"
+                width={200}
+                height={200}
+                className="aspect-square rounded-full border border-slate-200 dark:border-neutral-800 shadow-xl"
+                priority
+              />
+            ) : (
+              <div 
+                className="rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white text-4xl font-bold shadow-xl"
+                style={{ width: '200px', height: '200px' }}
+              >
+                👋
+              </div>
+            )}
+          </div>
+
+          {/* Content */}
+          <div className="flex-1 text-center md:text-left">
+            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+              Hi, I'm{" "}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
+                SedationH
+              </span>{" "}
+              👋
+            </h1>
+
+            <div className="text-xl md:text-2xl text-gray-600 mb-6 md:mb-8">
+              A Passionate{" "}
+              <span className="text-blue-600 font-semibold">
+                &lt;Developer /&gt;
+              </span>{" "}
+              & Writer
+            </div>
+
+            <p className="text-lg text-gray-500 mb-8 md:mb-12 leading-relaxed">
+              I love solving problems with code and documenting thoughts with
+              words. Here I share technical insights, life reflections, and
+              learning notes.
+            </p>
+
+            <div className="flex flex-col sm:flex-row items-center justify-center md:justify-start gap-4">
+              <Link
+                href="/blog"
+                className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-3 rounded-full font-medium hover:shadow-lg transform hover:-translate-y-1 transition-all w-full sm:w-auto text-center"
+              >
+                View Articles
+              </Link>
+              <Link
+                href={user?.html_url || ''}
+                target="_blank"
+                className="border border-gray-300 text-gray-700 px-8 py-3 rounded-full font-medium hover:border-gray-400 hover:shadow-md transition-all w-full sm:w-auto text-center"
+              >
+                GitHub
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Recent Articles */}
+      {recentIssues.length > 0 && (
+        <section className="max-w-6xl mx-auto px-4 py-16">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">
+              Recent Updates
+            </h2>
+            <p className="text-gray-600">
+              Latest published articles and thoughts
             </p>
           </div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {issues.map((issue) => (
-              <article
-                key={issue.id}
-                className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow flex flex-col h-full"
-              >
-                <div className="flex-1">
-                  <Link 
-                    href={`/detail/${issue.number}`}
-                    className="block group"
-                  >
-                    <h2 className="text-lg font-semibold text-gray-900 group-hover:text-blue-600 transition-colors line-clamp-2">
-                      {issue.title}
-                    </h2>
-                  </Link>
-                  
-                  <div className="flex items-center mt-3 text-sm text-gray-500">
-                    <img
-                      src={issue.user.avatar_url}
-                      alt={issue.user.login}
-                      className="w-5 h-5 rounded-full mr-2"
-                    />
-                    <span className="mr-4">@{issue.user.login}</span>
-                    <time>{formatDate(issue.created_at)}</time>
-                  </div>
-                  
-                  {/* 文章预览 */}
-                  {issue.body && (
-                    <p className="text-gray-600 mt-3 text-sm line-clamp-3">
-                      {issue.body.substring(0, 120)}
-                      {issue.body.length > 120 ? '...' : ''}
-                    </p>
-                  )}
-                </div>
-                
-                <div className="mt-4 pt-4 border-t border-gray-100">
-                  <Link 
-                    href={`/detail/${issue.number}`}
-                    className="inline-flex items-center text-sm font-medium text-blue-600 hover:text-blue-800 transition-colors"
-                  >
-                    阅读更多 →
-                  </Link>
-                </div>
-              </article>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {recentIssues.map((issue) => (
+              <ArticleCard key={issue.id} issue={issue} />
             ))}
           </div>
-        )}
-      </main>
 
-      {/* 页脚 */}
-      <footer className="bg-white border-t border-gray-200 mt-12">
-        <div className="max-w-4xl mx-auto px-4 py-6">
-          <p className="text-center text-gray-500 text-sm">
-            Powered by{' '}
-            <a 
-              href="https://nextjs.org" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="text-blue-600 hover:underline"
+          <div className="text-center mt-12">
+            <Link
+              href="/blog"
+              className="inline-flex items-center text-blue-600 hover:text-blue-800 font-medium transition-colors"
             >
-              Next.js
-            </a>{' '}
-            & GitHub Issues
-          </p>
+              View All Articles →
+            </Link>
+          </div>
+        </section>
+      )}
+
+      {/* Features Section */}
+      <section className="bg-gradient-to-r from-blue-50 to-purple-50 py-16">
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="text-center">
+              <div className="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                <span className="text-2xl">💻</span>
+              </div>
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                Tech Sharing
+              </h3>
+              <p className="text-gray-600 text-sm">
+                Sharing frontend, backend insights and best practices
+              </p>
+            </div>
+
+            <div className="text-center">
+              <div className="w-16 h-16 bg-purple-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                <span className="text-2xl">📝</span>
+              </div>
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                Learning Notes
+              </h3>
+              <p className="text-gray-600 text-sm">
+                Recording thoughts and insights from the learning journey
+              </p>
+            </div>
+
+            <div className="text-center">
+              <div className="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                <span className="text-2xl">🌱</span>
+              </div>
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                Life Reflections
+              </h3>
+              <p className="text-gray-600 text-sm">
+                Sharing thoughts and insights from daily life
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="bg-white border-t border-gray-200">
+        <div className="max-w-6xl mx-auto px-4 py-8">
+          <div className="text-center">
+            <p className="text-gray-500 text-sm">
+              © 2024 SedationH. Powered by{" "}
+              <a
+                href="https://nextjs.org"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-600 hover:underline"
+              >
+                Next.js
+              </a>{" "}
+              & GitHub Issues
+            </p>
+          </div>
         </div>
       </footer>
     </div>
-  )
+  );
+}
+
+// Generate page metadata
+export async function generateMetadata() {
+  return {
+    title: "SedationH - Personal Blog",
+    description:
+      "A personal blog sharing technical insights, learning notes, and life reflections",
+    keywords: ["blog", "tech", "frontend", "Next.js", "React"],
+  };
 }

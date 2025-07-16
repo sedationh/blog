@@ -13,15 +13,29 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "我的博客",
-  description: "基于 GitHub Issues 的简单博客系统",
-  keywords: ["博客", "GitHub Issues", "Next.js", "Markdown"],
-  authors: [{ name: "Your Name" }],
+  title: "SedationH - Personal Blog",
+  description: "A personal blog sharing technical insights, learning notes, and life reflections",
+  keywords: ["blog", "tech", "frontend", "Next.js", "React", "JavaScript", "TypeScript"],
+  authors: [{ name: "SedationH", url: "https://github.com/sedationh" }],
+  creator: "SedationH",
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    title: "SedationH - Personal Blog",
+    description: "A personal blog sharing technical insights, learning notes, and life reflections",
+    siteName: "SedationH Blog",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "SedationH - Personal Blog",
+    description: "A personal blog sharing technical insights, learning notes, and life reflections",
+  },
 };
 
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
+  maximumScale: 1,
 };
 
 export default function RootLayout({
@@ -30,7 +44,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="zh-CN">
+    <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
