@@ -12,24 +12,6 @@ export default async function Home() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100">
-      {/* Navigation Bar */}
-      <nav className="bg-white/80 backdrop-blur-md border-b border-gray-200/50 sticky top-0 z-10">
-        <div className="max-w-6xl mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="text-xl font-bold text-gray-900"></div>
-            <div className="flex items-center space-x-6">
-              <Link
-                href={user?.html_url || ''}
-                target="_blank"
-                className="text-gray-600 hover:text-gray-900 transition-colors"
-              >
-                GitHub
-              </Link>
-            </div>
-          </div>
-        </div>
-      </nav>
-
       {/* Hero Section */}
       <section className="max-w-6xl mx-auto px-4 py-16">
         <div className="flex flex-col md:flex-row items-center md:items-center gap-8 md:gap-12">
@@ -116,49 +98,6 @@ export default async function Home() {
           </div>
         </section>
       )}
-
-      {/* Features Section */}
-      <section className="bg-gradient-to-r from-blue-50 to-purple-50 py-16">
-        <div className="max-w-6xl mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="text-center">
-              <div className="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl">💻</span>
-              </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                Tech Sharing
-              </h3>
-              <p className="text-gray-600 text-sm">
-                Sharing frontend, backend insights and best practices
-              </p>
-            </div>
-
-            <div className="text-center">
-              <div className="w-16 h-16 bg-purple-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl">📝</span>
-              </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                Learning Notes
-              </h3>
-              <p className="text-gray-600 text-sm">
-                Recording thoughts and insights from the learning journey
-              </p>
-            </div>
-
-            <div className="text-center">
-              <div className="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl">🌱</span>
-              </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                Life Reflections
-              </h3>
-              <p className="text-gray-600 text-sm">
-                Sharing thoughts and insights from daily life
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* Footer */}
       <footer className="bg-white border-t border-gray-200">

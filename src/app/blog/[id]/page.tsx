@@ -1,7 +1,6 @@
 import { notFound } from "next/navigation";
 import { getIssueByNumber, formatDate } from "@/lib/github";
 import { Markdown } from "@/components/Markdown";
-import BackButton from "./BackButton";
 
 interface DetailPageProps {
   params: Promise<{
@@ -25,13 +24,6 @@ export default async function DetailPage({ params }: DetailPageProps) {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100">
-      {/* Navigation Bar */}
-      <nav className="bg-white/80 backdrop-blur-md border-b border-gray-200/50 sticky top-0 z-10">
-        <div className="max-w-5xl mx-auto px-4 py-4">
-          <BackButton />
-        </div>
-      </nav>
-
       {/* Article Content */}
       <main className="max-w-5xl mx-auto px-4 py-8">
         <article className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
@@ -80,10 +72,6 @@ export default async function DetailPage({ params }: DetailPageProps) {
           </div>
         </article>
 
-        {/* Back Button */}
-        <div className="mt-8 text-center">
-          <BackButton className="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors" />
-        </div>
       </main>
     </div>
   );

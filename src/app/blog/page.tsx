@@ -7,20 +7,6 @@ export default async function BlogPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100">
-      {/* Header */}
-      <header className="bg-white/80 backdrop-blur-md border-b border-gray-200/50 sticky top-0 z-10">
-        <div className="max-w-5xl mx-auto px-4 py-6">
-          <div className="flex items-center justify-between">
-            <Link
-              href="/"
-              className="text-blue-600 hover:text-blue-800 transition-colors"
-            >
-              ← Back to Home
-            </Link>
-          </div>
-        </div>
-      </header>
-
       {/* Main Content */}
       <main className="max-w-5xl mx-auto px-4 py-8">
         {issues.length === 0 ? (
