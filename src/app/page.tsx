@@ -4,10 +4,7 @@ import { getAllIssues, getGitHubUser } from "@/lib/github";
 import ArticleCard from "@/components/ArticleCard";
 
 export default async function Home() {
-  const [issues, user] = await Promise.all([
-    getAllIssues(),
-    getGitHubUser()
-  ]);
+  const [issues, user] = await Promise.all([getAllIssues(), getGitHubUser()]);
   const recentIssues = issues.slice(0, 3); // Show the latest 3 articles
 
   return (
@@ -59,7 +56,7 @@ export default async function Home() {
                 View Articles
               </Link>
               <Link
-                href={user?.html_url || ''}
+                href={user?.html_url || ""}
                 target="_blank"
                 className="border border-gray-300 text-gray-700 px-8 py-3 rounded-full font-medium hover:border-gray-400 hover:shadow-md transition-all w-full sm:w-auto text-center"
               >
@@ -104,16 +101,8 @@ export default async function Home() {
         <div className="max-w-6xl mx-auto px-4 py-8">
           <div className="text-center">
             <p className="text-gray-500 text-sm">
-              © 2024 SedationH. Powered by{" "}
-              <a
-                href="https://nextjs.org"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-blue-600 hover:underline"
-              >
-                Next.js
-              </a>{" "}
-              & GitHub Issues
+              © {new Date().getFullYear()} SedationH. Powered by Next.js &
+              GitHub Issues
             </p>
           </div>
         </div>
