@@ -25,10 +25,10 @@ export default async function DetailPage({ params }: DetailPageProps) {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100">
       {/* Article Content */}
-      <main className="max-w-5xl mx-auto px-4 py-8">
+      <main className="max-w-5xl mx-auto px-2 sm:px-4 py-8">
         <article className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
           {/* Article Header */}
-          <header className="px-6 py-8 border-b border-gray-200">
+          <header className="px-4 sm:px-6 py-8 border-b border-gray-200">
             <h1 className="text-3xl font-bold text-gray-900 mb-4">
               {issue.title}
             </h1>
@@ -59,7 +59,7 @@ export default async function DetailPage({ params }: DetailPageProps) {
           </header>
 
           {/* Article Content */}
-          <div className="px-6 py-8">
+          <div className="px-4 sm:px-6 py-8">
             <Markdown content={issue.body || ""} />
           </div>
         </article>

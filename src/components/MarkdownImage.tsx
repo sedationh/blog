@@ -82,21 +82,21 @@ const FixedZoomedImage: FC<{
   const [imageError, setImageError] = useState(false)
 
   return (
-    <div className="my-4 text-center">
+    <div className="my-4 text-center -mx-2 sm:mx-0">
       <PhotoView src={src}>
-        <div className="relative inline-block cursor-pointer group">
+        <div className="relative inline-block cursor-pointer group max-w-full w-full">
           <Image
             src={src}
             alt={alt || "Image"}
             width={800}
             height={600}
             className={clsx(
-              'max-w-full h-auto rounded-lg shadow-sm transition-all duration-200',
+              'w-full h-auto rounded-lg shadow-sm transition-all duration-200',
               'group-hover:shadow-md group-hover:scale-[1.02]',
               !imageLoaded && 'opacity-0',
               imageError && 'hidden'
             )}
-            style={{ maxWidth: Math.min(containerWidth, 800) }}
+            style={{ maxWidth: '100%' }}
             onLoad={() => setImageLoaded(true)}
             onError={() => setImageError(true)}
             unoptimized={src.startsWith('http')}
@@ -143,11 +143,11 @@ export const MarkdownImage: FC<{ src: string; alt?: string }> = (props) => {
   // 如果是视频文件
   if (isVideoExt(ext)) {
     return (
-      <div className="flex flex-col items-center my-6">
+      <div className="flex flex-col items-center my-6 -mx-2 sm:mx-0">
         <LazyLoad>
           <Video
             src={src}
-            className="fit max-w-full"
+            className="fit w-full max-w-full"
             playsInline
             autoPlay={false}
           />
