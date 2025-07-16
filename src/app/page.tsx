@@ -19,12 +19,6 @@ export default async function Home() {
             <div className="text-xl font-bold text-gray-900">My Blog</div>
             <div className="flex items-center space-x-6">
               <Link
-                href="/blog"
-                className="text-gray-600 hover:text-gray-900 transition-colors"
-              >
-                Articles
-              </Link>
-              <Link
                 href={user?.html_url || ''}
                 target="_blank"
                 className="text-gray-600 hover:text-gray-900 transition-colors"
@@ -41,23 +35,14 @@ export default async function Home() {
         <div className="flex flex-col md:flex-row items-center md:items-center gap-8 md:gap-12">
           {/* Avatar */}
           <div className="flex-shrink-0">
-            {user?.avatar_url ? (
-              <Image
-                src={user.avatar_url}
-                alt="GitHub Avatar"
-                width={200}
-                height={200}
-                className="aspect-square rounded-full border border-slate-200 dark:border-neutral-800 shadow-xl"
-                priority
-              />
-            ) : (
-              <div 
-                className="rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white text-4xl font-bold shadow-xl"
-                style={{ width: '200px', height: '200px' }}
-              >
-                👋
-              </div>
-            )}
+            <Image
+              src="/avatar.jpg"
+              alt="SedationH Avatar"
+              width={200}
+              height={200}
+              className="aspect-square rounded-full border border-slate-200 dark:border-neutral-800 shadow-xl"
+              priority
+            />
           </div>
 
           {/* Content */}

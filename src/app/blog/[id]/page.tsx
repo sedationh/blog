@@ -43,8 +43,8 @@ export default async function DetailPage({ params }: DetailPageProps) {
 
             <div className="flex items-center text-sm text-gray-500">
               <img
-                src={issue.user.avatar_url}
-                alt={issue.user.login}
+                src="/avatar.jpg"
+                alt="SedationH"
                 className="w-8 h-8 rounded-full mr-3"
               />
               <div>
