@@ -169,7 +169,7 @@ export const Markdown: FC<MarkdownProps & PropsWithChildren> = memo((props) => {
           </ul>
         ),
         ol: ({ children }) => (
-          <ol className="list-decimal list-outside ml-6 mb-4 text-gray-700 space-y-2 [&_ul]:mt-2 [&_ul]:mb-2 [&_ol]:mt-2 [&_ol]:mb-2">
+          <ol className="list-decimal list-outside ml-6 mb-4 text-gray-700 space-y-2 [&_ul]:mt-2 [&_ul]:mb-2 [&_ol]:mt-2 [&_ol]:mb-2 last:mb-0">
             {children}
           </ol>
         ),
