@@ -11,10 +11,6 @@ export default async function BlogPage() {
       <header className="bg-white/80 backdrop-blur-md border-b border-gray-200/50 sticky top-0 z-10">
         <div className="max-w-5xl mx-auto px-4 py-6">
           <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900">All Articles</h1>
-              <p className="text-gray-600 mt-2">All my articles</p>
-            </div>
             <Link
               href="/"
               className="text-blue-600 hover:text-blue-800 transition-colors"

@@ -16,7 +16,7 @@ export default async function Home() {
       <nav className="bg-white/80 backdrop-blur-md border-b border-gray-200/50 sticky top-0 z-10">
         <div className="max-w-6xl mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
-            <div className="text-xl font-bold text-gray-900">My Blog</div>
+            <div className="text-xl font-bold text-gray-900"></div>
             <div className="flex items-center space-x-6">
               <Link
                 href={user?.html_url || ''}

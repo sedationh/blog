@@ -89,15 +89,16 @@ export const Markdown: FC<MarkdownProps & PropsWithChildren> = memo((props) => {
         hr: () => <hr className="my-4 border-t-2 border-gray-200" />,
 
         // 代码块处理 - 直接处理 code 元素
-        code: ({ children, className: codeClassName }) => {
+        code: ({ children, className: codeClassName, ...props }) => {
           // 检查是否是代码块中的 code（支持 language- 和 lang- 前缀）
           if (
-            codeClassName &&
-            (codeClassName.includes("language-") ||
-              codeClassName.includes("lang-"))
+            (codeClassName &&
+              (codeClassName.includes("language-") ||
+                codeClassName.includes("lang-"))) ||
+            (typeof children === "string" && children?.includes("\n"))
           ) {
             // 提取语言信息 - 支持多种格式
-            const languageMatch = codeClassName.match(
+            const languageMatch = codeClassName?.match(
               /(?:language-|lang-)(\w+)/
             );
             const language = languageMatch ? languageMatch[1] : "";
