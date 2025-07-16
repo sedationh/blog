@@ -1,8 +1,6 @@
 import { notFound } from "next/navigation";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
-import rehypeRaw from "rehype-raw";
 import { getIssueByNumber, formatDate } from "@/lib/github";
+import { Markdown } from "@/components/Markdown";
 import BackButton from "./BackButton";
 
 interface DetailPageProps {
@@ -29,7 +27,7 @@ export default async function DetailPage({ params }: DetailPageProps) {
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100">
       {/* Navigation Bar */}
       <nav className="bg-white/80 backdrop-blur-md border-b border-gray-200/50 sticky top-0 z-10">
-        <div className="max-w-4xl mx-auto px-4 py-4">
+        <div className="max-w-5xl mx-auto px-4 py-4">
           <BackButton />
         </div>
       </nav>
@@ -78,86 +76,7 @@ export default async function DetailPage({ params }: DetailPageProps) {
 
           {/* Article Content */}
           <div className="px-6 py-8">
-            {issue.body ? (
-              <div className="prose prose-lg max-w-none">
-                <ReactMarkdown
-                  remarkPlugins={[remarkGfm]}
-                  rehypePlugins={[rehypeRaw]}
-                  components={{
-                    // Custom Markdown component styles
-                    h1: ({ children }) => (
-                      <h1 className="text-2xl font-bold text-gray-900 mb-4">
-                        {children}
-                      </h1>
-                    ),
-                    h2: ({ children }) => (
-                      <h2 className="text-xl font-bold text-gray-900 mb-3 mt-6">
-                        {children}
-                      </h2>
-                    ),
-                    h3: ({ children }) => (
-                      <h3 className="text-lg font-bold text-gray-900 mb-2 mt-5">
-                        {children}
-                      </h3>
-                    ),
-                    p: ({ children }) => (
-                      <p className="text-gray-700 mb-4 leading-relaxed">
-                        {children}
-                      </p>
-                    ),
-                    code: ({ children }) => (
-                      <code className="bg-gray-100 text-gray-800 px-1 py-0.5 rounded text-sm font-mono">
-                        {children}
-                      </code>
-                    ),
-                    pre: ({ children }) => (
-                      <pre className="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto mb-4">
-                        {children}
-                      </pre>
-                    ),
-                    blockquote: ({ children }) => (
-                      <blockquote className="border-l-4 border-blue-500 pl-4 my-4 text-gray-600 italic">
-                        {children}
-                      </blockquote>
-                    ),
-                    ul: ({ children }) => (
-                      <ul className="list-disc list-inside mb-4 text-gray-700">
-                        {children}
-                      </ul>
-                    ),
-                    ol: ({ children }) => (
-                      <ol className="list-decimal list-inside mb-4 text-gray-700">
-                        {children}
-                      </ol>
-                    ),
-                    li: ({ children }) => <li className="mb-1">{children}</li>,
-                    a: ({ href, children }) => (
-                      <a
-                        href={href}
-                        className="text-blue-600 hover:text-blue-800 underline"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        {children}
-                      </a>
-                    ),
-                    img: ({ src, alt, width, height, ...props }) => (
-                      <img
-                        src={src}
-                        alt={alt || "Image"}
-                        className="max-w-full h-auto rounded-lg shadow-sm my-4 mx-auto block"
-                        loading="lazy"
-                        {...props}
-                      />
-                    ),
-                  }}
-                >
-                  {issue.body}
-                </ReactMarkdown>
-              </div>
-            ) : (
-              <p className="text-gray-500 italic">This article has no content</p>
-            )}
+            <Markdown content={issue.body || ""} />
           </div>
         </article>
 
