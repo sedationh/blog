@@ -34,15 +34,7 @@ export default async function DetailPage({ params }: DetailPageProps) {
             </h1>
 
             <div className="flex items-center text-sm text-gray-500">
-              <img
-                src="/avatar.jpg"
-                alt="SedationH"
-                className="w-8 h-8 rounded-full mr-3"
-              />
               <div>
-                <div className="font-medium text-gray-700">
-                  @{issue.user.login}
-                </div>
                 <div className="flex items-center mt-1">
                   <span>Published on {formatDate(issue.created_at)}</span>
                   {issue.updated_at !== issue.created_at && (
