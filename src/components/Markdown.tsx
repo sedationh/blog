@@ -4,8 +4,9 @@ import { clsx } from 'clsx'
 import type { MarkdownToJSX } from 'markdown-to-jsx'
 import { compiler } from 'markdown-to-jsx'
 import type { FC, PropsWithChildren } from 'react'
-import { memo, Suspense, useMemo } from 'react'
+import React, { memo, Suspense, useMemo } from 'react'
 import { MarkdownImage, MarkdownImageProvider } from './MarkdownImage'
+import { CodeBlock, InlineCode } from './CodeBlock'
 
 interface MarkdownProps {
   content: string;
@@ -93,26 +94,42 @@ export const Markdown: FC<MarkdownProps & PropsWithChildren> = memo((props) => {
           <hr className="my-4 border-t-2 border-gray-200" />
         ),
 
-        // 行内代码
+        // 代码块处理 - 直接处理 code 元素
         code: ({ children, className: codeClassName }) => {
-          // 如果没有 className，说明是行内代码
-          if (!codeClassName) {
+          // 检查是否是代码块中的 code（支持 language- 和 lang- 前缀）
+          if (codeClassName && (codeClassName.includes('language-') || codeClassName.includes('lang-'))) {
+            // 提取语言信息 - 支持多种格式
+            const languageMatch = codeClassName.match(/(?:language-|lang-)(\w+)/)
+            const language = languageMatch ? languageMatch[1] : ''
+            
             return (
-              <code className="bg-gray-100 text-gray-800 px-1 py-0.5 rounded text-sm font-mono">
-                {children}
-              </code>
-            );
+              <CodeBlock 
+                language={language}
+                className={codeClassName}
+              >
+                {String(children)}
+              </CodeBlock>
+            )
           }
-          // 有 className 的话会被 pre 包裹处理
-          return <code className={codeClassName}>{children}</code>;
+          
+          // 普通行内代码
+          return <InlineCode className={codeClassName}>{String(children)}</InlineCode>
         },
 
-        // 代码块
-        pre: ({ children }) => (
-          <pre className="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto mb-4 text-sm">
-            {children}
-          </pre>
-        ),
+        // 简化的 pre 处理
+        pre: ({ children, ...props }) => {
+          // 如果包含我们的 CodeBlock，直接返回
+          if (React.isValidElement(children) && (children as any).type === CodeBlock) {
+            return children
+          }
+          
+          // 默认 pre 处理
+          return (
+            <pre className="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto mb-4 text-sm" {...props}>
+              {children}
+            </pre>
+          )
+        },
 
         // 引用
         blockquote: ({ children }) => (
